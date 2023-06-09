@@ -773,11 +773,7 @@ composer install
 ```sh
 copy .env.example .env
 ```
-4. Сгенерируйте ключ приложения:
-```sh
-php artisan key:generate
-```
-5. Выполните команду для запуска миграций:
+4. Выполните команду для запуска миграций:
 ```sh
 php artisan migrate
 ```
@@ -785,14 +781,62 @@ php artisan migrate
 ```sh
 php artisan migrate --seed
 ```
-6. Запустите веб-сервер:
+5. Запустите веб-сервер:
 ```sh
 php artisan serve
 ```
-7. Откройте в браузере, например, http://localhost:8000/api/v1/posts
+6. Откройте в браузере, например, http://localhost:8000/api/v1/posts
 
 ## Запуск тестов
 Создайте новую базу данных для тестирования, измените параметры для подключения к ней в файле .env.testing и выполните:
 ```sh
 php artisan test 
+```
+
+## Запуск в Docker
+1. Клонируйте этот репозиторий и перейдите в папку проекта:
+```sh
+git clone https://github.com/AllaAverina/bulletin-board-API
+cd bulletin-board-API
+```
+2. Установите зависимости:
+```sh
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
+3. Создайте файл .env:
+```sh
+copy .env.docker.examlpe .env
+```
+4. Создайте псевдоним (shell alias) и запустите sail:
+```sh
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+sail up -d
+```
+5. Выполните команду для запуска миграций:
+```sh
+sail artisan migrate
+```
+Или если хотите заполнить базу данных фиктивными данными:
+```sh
+sail artisan migrate --seed
+```
+6. Откройте в браузере, например, http://localhost/api/v1/posts
+7. Для остановки контейнеров используйте:
+```sh
+sail stop
+```
+
+## Запуск тестов в Docker
+1. Настройте файл .env.testing:
+```sh
+copy .env.docker.testing .env.testing
+```
+2. Запустите тесты:
+```sh
+sail artisan test 
 ```
