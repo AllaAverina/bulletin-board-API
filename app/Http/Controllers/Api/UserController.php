@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      */
     public function index(Request $request)
     {
@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      */
     public function show(Request $request, User $user, string $part = '')
     {
@@ -38,6 +38,7 @@ class UserController extends Controller
                 ->withCount('comments')
                 ->latest()
                 ->paginate($request->get('per_page', 25));
+
             return (PostResource::collection($posts))->additional([
                 'user' => new UserResource($user),
             ]);
@@ -48,6 +49,7 @@ class UserController extends Controller
                 ->with('user:id,nickname')
                 ->latest()
                 ->paginate($request->get('per_page', 25));
+
             return (CommentResource::collection($comments))->additional([
                 'user' => new UserResource($user),
             ]);

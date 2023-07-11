@@ -21,6 +21,7 @@ class ProfileController extends Controller
                 ->withCount('comments')
                 ->latest()
                 ->paginate($request->get('per_page', 25));
+                
             return (PostResource::collection($posts))->additional([
                 'user' => new UserResource($request->user()),
             ]);
@@ -31,6 +32,7 @@ class ProfileController extends Controller
                 ->with('user:id,nickname')
                 ->latest()
                 ->paginate($request->get('per_page', 25));
+
             return (CommentResource::collection($comments))->additional([
                 'user' => new UserResource($request->user()),
             ]);

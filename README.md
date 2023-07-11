@@ -810,7 +810,7 @@ docker run --rm \
 ```
 3. Создайте файл .env:
 ```sh
-copy .env.docker.examlpe .env
+cp .env.docker.examlpe .env
 ```
 4. Создайте псевдоним (shell alias) и запустите sail:
 ```sh
@@ -834,7 +834,7 @@ sail stop
 ## Запуск тестов в Docker
 1. Настройте файл .env.testing:
 ```sh
-copy .env.docker.testing .env.testing
+cp .env.docker.testing .env.testing
 ```
 2. Запустите тесты:
 ```sh

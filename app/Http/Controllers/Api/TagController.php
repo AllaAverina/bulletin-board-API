@@ -27,6 +27,7 @@ class TagController extends Controller
     public function show(Request $request, Tag $tag)
     {
         $posts = $tag->posts()->with('user:id,nickname')->latest()->paginate($request->get('per_page', 25));
+        
         return (PostResource::collection($posts))->additional(['tag' => new TagResource($tag),]);
     }
 }

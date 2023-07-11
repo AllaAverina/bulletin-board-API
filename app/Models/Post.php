@@ -21,7 +21,6 @@ class Post extends Model
         'title',
         'price',
         'description',
-        'user_id',
     ];
 
     /**

@@ -53,7 +53,7 @@ class User extends Authenticatable
     }
 
     /**
-     * The posts that belong to the user.
+     * Get user's posts.
      */
     public function posts(): HasMany
     {
@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get user comments.
+     * Get user's comments.
      */
     public function comments(): HasMany
     {

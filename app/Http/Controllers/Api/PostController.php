@@ -50,13 +50,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $post = Post::create([
-            'title' => $request->title,
-            'price' => $request->price,
-            'description' => $request->description,
-            'user_id' => $request->user()->id,
-        ]);
-
+        $post = $request->user()->posts()->create($request->only('title', 'price', 'description'));
         $post->tags()->attach($request->tags);
 
         return new PostResource($post->load('tags','user:id,nickname'));
@@ -69,6 +63,7 @@ class PostController extends Controller
     {
         $post->load('tags', 'user:id,nickname');
         $comments = $post->comments()->with('user:id,nickname')->latest()->paginate($request->get('per_page', 25));
+        
         return (CommentResource::collection($comments))->additional(['post' => new PostResource($post),]);
     }
 
